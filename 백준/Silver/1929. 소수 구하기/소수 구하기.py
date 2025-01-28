@@ -6,7 +6,11 @@ result = []
 def is_prime_number(x):
     if x < 2:
         return None
-    for i in range(2, int(math.sqrt(x))+1):
+    elif x == 2:
+        return x
+    elif x % 2 == 0:
+        return None
+    for i in range(3, int(math.sqrt(x))+1, 2):
         if x % i == 0:
             return None
     return x
