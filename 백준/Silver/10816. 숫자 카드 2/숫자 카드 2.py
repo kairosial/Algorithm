@@ -12,11 +12,6 @@ for num in card_list:
     else:
         count_dict[num] = 1
 
-result = []
-for i in target_list:
-    try:
-        result.append(count_dict[i])
-    except:
-        result.append(0)
+result = [count_dict.get(num, 0) for num in target_list]
 
 print(*result)
