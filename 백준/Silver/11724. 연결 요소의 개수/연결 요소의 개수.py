@@ -8,12 +8,7 @@ for i in range(1, m+1):
     graph[a].append(b)
     graph[b].append(a)
 
-def dfs(graph, v, visited):
-    visited[v] = True
-    for i in graph[v]:
-        if not visited[i]:
-            dfs(graph, i, visited)
-
+# DFS 알고리즘으로 실행 시 RecursionError 발생하므로 BFS 알고리즘 활용
 def bfs(graph, start, visited):
     queue = deque([start])
     visited[start] = True
