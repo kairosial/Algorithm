@@ -1,37 +1,51 @@
 from collections import deque
 
 n, m, v = map(int, input().split())
-edge = [list(map(int, input().split())) for _ in range(m)]
+edges = [list(map(int, input().split())) for _ in range(m)]
+
+# 인접 리스트 생성
 graph = [[] for _ in range(n+1)]
-for a, b in edge:
+for a, b in edges:
     graph[a].append(b)
     graph[b].append(a)
-graph = [sorted(g) for g in graph]
+# 정점 번호가 작은 것부터 방문해야하므로 graph의 각 요소를 오름차순 정렬
+for g in graph:
+    g.sort()
+# 또는 다음과 같이 정렬
+# graph = [sorted(g) for g in graph]
 
+
+
+# DFS - 재귀 방식
 DFS_visited = [False] * (n+1)
 DFS_result = []
-def DFS(graph, v, visited, result):
-    result.append(v)
-    visited[v] = True
+def DFS(v):
+    DFS_visited[v] = True
+    DFS_result.append(v)
     for i in graph[v]:
-        if not visited[i]:
-            DFS(graph, i, visited, result)
-    return result
+        if not DFS_visited[i]:
+            DFS(i)
 
+
+
+# BFS - 큐 기반
 BFS_visited = [False] * (n+1)
 BFS_result = []
-def BFS(graph, start, visited, result):
-    result.append(start)
-    visited[start] = True
+def BFS(start):
     que = deque([start])
+    BFS_visited[start] = True
+    BFS_result.append(start)
     while que:
         v = que.popleft()
         for i in graph[v]:
-            if not visited[i]:
+            if not BFS_visited[i]:
                 que.append(i)
-                visited[i] = True
-                result.append(i)
-    return result
+                BFS_visited[i] = True
+                BFS_result.append(i)
 
-print(*DFS(graph, v, DFS_visited, DFS_result))
-print(*BFS(graph, v, BFS_visited, BFS_result))
+
+
+DFS(v)
+print(*DFS_result)
+BFS(v)
+print(*BFS_result)
